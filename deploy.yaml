@@ -3,3 +3,8 @@
   sudo: yes
   roles:
   - awesome-app
+
+- hosts: haproxy-servers
+  sudo: yes
+  roles:
+  - { role: haproxy, service_group: nginx-servers, backend_name: awesome-app }

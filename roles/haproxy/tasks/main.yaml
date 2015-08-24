@@ -1,0 +1,13 @@
+---
+- name: disable the firewall
+  service: name=iptables state=stopped enabled=no
+  
+- name: enable the EPEL repository
+  yum: name=epel-release
+
+- name: install HAProxy
+  yum: name=haproxy
+
+- name: customize HAProxy to serve HTTP traffic to the designated downstream servers
+  template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg owner=haproxy group=haproxy
+  notify: restart_haproxy

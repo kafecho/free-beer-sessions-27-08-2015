@@ -1,0 +1,31 @@
+global
+        maxconn 512
+        spread-checks 5
+
+defaults
+        mode http
+        log global
+        monitor-uri /_haproxy_health_check
+        option log-health-checks
+        option httplog
+        balance roundrobin
+        option forwardfor
+        option redispatch
+        retries 4
+        option http-server-close
+        timeout client 150000
+        timeout server 3600000
+        timeout connect 500
+
+        stats enable
+        stats scope .
+        stats uri /_stats
+
+frontend http-in
+         bind *:{{ service_port }}
+         default_backend {{ backend_name }}
+
+backend {{ backend_name }}
+{% for host in groups[service_group] %}
+	server {{ host }} {{ host }}:{{ hostvars[host]['http_port'] }} check inter 5s
+{% endfor %}
