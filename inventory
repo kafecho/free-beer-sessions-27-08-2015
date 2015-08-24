@@ -1,0 +1,9 @@
+[nginx-servers]
+192.168.56.201
+
+[vagrant-vms:children]
+nginx-servers
+
+[vagrant-vms:vars]
+ansible_ssh_pass=vagrant
+ansible_ssh_user=vagrant
