@@ -1,0 +1,8 @@
+---
+- name: customize the default static website
+  copy: src={{ item}} dest=/usr/share/nginx/html
+  with_items:
+  - index.html
+  - image.jpg
+  notify:
+  - restart nginx 
