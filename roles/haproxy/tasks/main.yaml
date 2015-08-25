@@ -10,4 +10,7 @@
 
 - name: customize HAProxy to serve HTTP traffic to the designated downstream servers
   template: src=haproxy.cfg.j2 dest=/etc/haproxy/haproxy.cfg owner=haproxy group=haproxy
-  notify: restart_haproxy
+  notify: restart haproxy
+
+- name: ensure HAProxy is running
+  service: name=haproxy state=running
